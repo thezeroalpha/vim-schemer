@@ -2593,9 +2593,9 @@ function! Schemer#ProcessFile(file) abort
         endif
       endwhile
     elseif line =~ "^link"
-      let splitline = line->split(' ')
-      let from = splitline[1]
-      let to = splitline[2]
+      let splitline = line->split()
+      let from = splitline[1]->trim()
+      let to = splitline[2]->trim()
 
       for from_group in from->split(',')
         let links[from_group] = to
