@@ -12,11 +12,41 @@ It consists of:
 
 ## Why?
 I like making my own colorschemes, I don't like dealing with Vim's syntax.
-When creating colorschemes, I want to be able to write "give the function a foreground color #f4f400, background color #222222. make it italic" instead of "highlight the function in the gui with foreground color #f4f400, in the gui with background color #222222, in cterm with foreground 5, in cterm with background 7, and give it bold attributes in gui and cterm."
-Similarly, I want to write "link tabline, statusline, and incsearch to linenr" instead of "link tabline to linenr, link statusline to linenr, link incsearch to linenr".
-I also want to easily define my own names for colors.
+I wanted something simpler and more intuitive.
 
-Vim's syntax feels repetitive to me, and I can't always remember the necessary boilerplate, so I made this. A Schemer colorscheme definition is as simple as:
+Here are some specific examples from my colorscheme.
+
+### Example: incsearch
+Vim colorscheme syntax
+
+```vim
+hi Incsearch guifg=NONE guibg=#b7d1b0 ctermfg=NONE ctermbg=151 cterm=bold gui=bold
+```
+
+Schemer syntax:
+
+```
+Incsearch NONE, #b7d1b0. bold
+```
+
+### Example: link label, storageclass, and typedef to structure
+Vim colorscheme syntax
+
+```vim
+hi! link typedef structure
+hi! link label structure
+hi! link typedef structure
+```
+
+Schemer syntax:
+
+```
+link label,storageclass,typedef structure
+```
+
+### A full colorscheme example
+Overall, Vim's syntax for colorscheme definitions feels repetitive to me, and I can't always remember the necessary boilerplate, so I made this.
+A Schemer colorscheme definition is as simple as:
 
 ```
 background dark
