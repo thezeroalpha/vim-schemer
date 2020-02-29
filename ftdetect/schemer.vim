@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.schemer set filetype=schemer
+autocmd BufRead,BufNewFile *.schemer setfiletype schemer

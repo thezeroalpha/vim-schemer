@@ -1,3 +1,8 @@
+if exists('g:loaded_schemer_autoload')
+  finish
+endif
+let g:loaded_schemer_autoload = 1
+
 " the 6 value iterations in the xterm color cube "{{{2
 let s:valuerange6 = [ 0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF ]
 
@@ -2661,3 +2666,4 @@ function! Schemer#ProcessFile(file) abort
 
   echom "Written to ~/.vim/colors/".(a:file->substitute(".*/", "", "")->substitute('\.schemer', '.vim', ''))
 endfunction
+
