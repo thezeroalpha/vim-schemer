@@ -3,13 +3,14 @@ if exists('g:loaded_schemer_autoload')
 endif
 let g:loaded_schemer_autoload = 1
 
-" the 6 value iterations in the xterm color cube "{{{2
+" Color functions from https://github.com/chrisbra/Colorizer
+" the 6 value iterations in the xterm color cube
 let s:valuerange6 = [ 0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF ]
 
-"" the 4 value iterations in the 88 color xterm cube "{{{2
+"" the 4 value iterations in the 88 color xterm cube
 let s:valuerange4 = [ 0x00, 0x8B, 0xCD, 0xFF ]
 "
-"" 16 basic colors "{{{2
+"" 16 basic colors
 let s:basic16 = [
       \ [ 0x00, 0x00, 0x00 ],
       \ [ 0xCD, 0x00, 0x00 ],
@@ -58,7 +59,7 @@ if ($ComSpec =~# '^\%(command\.com\|cmd\.exe\)$' &&
   let &t_Co=16
 endif
 
-" xterm-8 colors "{{{2
+" xterm-8 colors
 let s:xterm_8colors = {
       \ 'black':          '#000000',
       \ 'darkblue':       '#00008B',
@@ -74,7 +75,7 @@ let s:xterm_8colors = {
       \ 'grey':           '#E5E5E5'
       \ }
 
-" xterm-16 colors "{{{2
+" xterm-16 colors
 let s:xterm_16colors = {
       \ 'darkgrey':       '#7F7F7F',
       \ 'darkgray':       '#7F7F7F',
@@ -95,7 +96,7 @@ let s:xterm_16colors = {
 " add the items from the 8 color xterm variable to the 16 color xterm
 call extend(s:xterm_16colors, s:xterm_8colors)
 
-" W3C Colors "{{{2
+" W3C Colors
 let s:w3c_color_names = {
       \ 'aliceblue': '#F0F8FF',
       \ 'antiquewhite': '#FAEBD7',
@@ -239,7 +240,7 @@ let s:w3c_color_names = {
       \ 'yellowgreen': '#9ACD32'
       \ }
 
-" X11 color names taken from "{{{2
+" X11 color names taken from
 " http://cvsweb.xfree86.org/cvsweb/*checkout*/xc/programs/rgb/rgb.txt?rev=1.2
 let s:x11_color_names = {
       \ 'snow': '#FFFAFA',
@@ -902,7 +903,7 @@ let s:x11_color_names = {
       \ }
 
 " Functions, to highlight certain types {{{1
-function! s:ColorRGBValues(val) "{{{2
+function! s:ColorRGBValues(val)
   let s:position = getpos('.')
   if <sid>IsInComment()
     " skip coloring comments
@@ -937,7 +938,7 @@ function! s:ColorRGBValues(val) "{{{2
   endif
 endfunction
 
-function! s:ColorHSLValues(val) "{{{2
+function! s:ColorHSLValues(val)
   let s:position = getpos('.')
   if <sid>IsInComment()
     " skip coloring comments
@@ -957,7 +958,7 @@ function! s:ColorHSLValues(val) "{{{2
   endif
 endfu
 
-function! s:PreviewColorName(color) "{{{2
+function! s:PreviewColorName(color)
   let s:position = getpos('.')
   let name=tolower(a:color)
   let clr = s:colors[name]
@@ -968,7 +969,7 @@ function! s:PreviewColorName(color) "{{{2
   endif
 endfu
 
-function! s:PreviewColorHex(match) "{{{2
+function! s:PreviewColorHex(match)
   let s:position = getpos('.')
   if <sid>IsInComment()
     " skip coloring comments
@@ -1006,7 +1007,7 @@ function! s:PreviewColorHex(match) "{{{2
   endif
 endfunction
 
-function! s:PreviewColorTerm(pre, text, post) "{{{2
+function! s:PreviewColorTerm(pre, text, post)
   " a:pre: Ansi-Sequences determining the highlighting
   " a:text: Text to color
   " a:post: Ansi-Sequences resetting the coloring (might be empty)
@@ -1044,7 +1045,7 @@ function! s:PreviewColorTerm(pre, text, post) "{{{2
     return a:pre . a:text. a:post
   endif
 endfunction
-function! s:PreviewColorNroff(match) "{{{2
+function! s:PreviewColorNroff(match)
   let s:position = getpos('.')
   let clr_Dict = {}
   let color = []
@@ -1075,7 +1076,7 @@ function! s:PreviewColorNroff(match) "{{{2
     return a:match
   endif
 endfunction
-function! s:PreviewTaskWarriorColors(submatch) "{{{2
+function! s:PreviewTaskWarriorColors(submatch)
   " a:submatch is something like 'black on rgb141'
 
   " this highlighting should overrule e.g. colorname highlighting
@@ -1148,7 +1149,7 @@ function! s:PreviewTaskWarriorColors(submatch) "{{{2
   endtry
 endfunction
 
-function! s:PreviewVimColors(submatch) "{{{2
+function! s:PreviewVimColors(submatch)
   " a:submatch is something like 'black on rgb141'
 
   " this highlighting should overrule e.g. colorname highlighting
@@ -1196,7 +1197,7 @@ function! s:PreviewVimColors(submatch) "{{{2
   endtry
 endfunction
 
-function! s:PreviewVimHighlightDump(match) "{{{2
+function! s:PreviewVimHighlightDump(match)
   " highlights dumps of :hi
   " e.g
   "SpecialKey     xxx term=bold cterm=bold ctermfg=124 guifg=Cyan
@@ -1232,7 +1233,7 @@ function! s:PreviewVimHighlightDump(match) "{{{2
   endtry
 endfunction
 
-function! s:PreviewVimHighlight(match) "{{{2
+function! s:PreviewVimHighlight(match)
   " like colorhighlight plugin,
   " schemer highlight statements in .vim files
   let s:position = getpos('.')
@@ -1268,12 +1269,12 @@ function! s:PreviewVimHighlight(match) "{{{2
   endtry
 endfunction
 
-function! s:IsInComment() "{{{1
+function! s:IsInComment()
   return s:skip_comments &&
         \ synIDattr(synIDtrans(synID(line('.'), col('.'),1)), 'name') == "Comment"
 endfu
 
-function! s:DictFromList(dict, list) "{{{1
+function! s:DictFromList(dict, list)
   let dict = copy(a:dict)
   let match = filter(a:list, 'v:val =~# ''=''')
   for item in match
@@ -1283,19 +1284,19 @@ function! s:DictFromList(dict, list) "{{{1
   return dict
 endfunction
 
-function! s:GetPatternLiteral(pat) "{{{1
+function! s:GetPatternLiteral(pat)
   return '\V'. substitute(escape(a:pat, '\\'), "\n", '\\n', 'g')
 endfu
-function! s:Term2RGB(index) "{{{1
+function! s:Term2RGB(index)
   " Return index in colortable in RRGGBB form
   return join(map(copy(s:colortable[a:index]), 'printf("%02X", v:val)'),'')
 endfu
 
-function! s:Reltime(...) "{{{1
+function! s:Reltime(...)
   return exists("a:1") ? reltime(a:1) : reltime()
 endfu
 
-function! s:PrintColorStatistics() "{{{1
+function! s:PrintColorStatistics()
   if get(g:, 'schemer_debug', 0)
     echohl Title
     echom printf("Colorstatistics at: %s", strftime("%H:%M"))
@@ -1308,7 +1309,7 @@ function! s:PrintColorStatistics() "{{{1
   endif
 endfu
 
-function! s:ColorInit(...) "{{{1
+function! s:ColorInit(...)
   let s:force_hl = !empty(a:1)
   let s:term_true_color = (exists('+tgc') && &tgc)
   let s:stop = 0
@@ -1510,7 +1511,7 @@ function! s:ColorInit(...) "{{{1
   endif
 endfu
 
-function! s:AddOffset(list) "{{{1
+function! s:AddOffset(list)
   return a:list
   let result=[]
   for val in a:list
@@ -1522,7 +1523,7 @@ function! s:AddOffset(list) "{{{1
   endfor
   return result
 endfu
-function! s:SwapColors(list) "{{{1
+function! s:SwapColors(list)
   if empty(a:list[0]) && empty(a:list[1])
     return a:list
   elseif s:swap_fg_bg > 0
@@ -1534,7 +1535,7 @@ function! s:SwapColors(list) "{{{1
   endif
 endfu
 
-function! s:FGforBG(bg) "{{{1
+function! s:FGforBG(bg)
   " takes a 6hex color code and returns a matching color that is visible
   let fgc = g:schemer_fgcontrast
   if fgc == -1
@@ -1553,7 +1554,7 @@ function! s:FGforBG(bg) "{{{1
   end
 endfunction
 
-function! s:DidColor(clr, pat) "{{{1
+function! s:DidColor(clr, pat)
   let idx = index(w:match_list, a:pat)
   if idx > -1
     let attr = <sid>SynID(a:clr)
@@ -1564,7 +1565,7 @@ function! s:DidColor(clr, pat) "{{{1
   return 0
 endfu
 
-function! s:DoHlGroup(group, Dict) "{{{1
+function! s:DoHlGroup(group, Dict)
   if !s:force_hl
     let syn = <sid>SynID(a:group)
     if !empty(syn)
@@ -1624,7 +1625,7 @@ function! s:DoHlGroup(group, Dict) "{{{1
   call s:Exe(hi)
 endfunction
 
-function! s:Exe(stmt) "{{{1
+function! s:Exe(stmt)
   "Don't error out for invalid colors
   try
     exe a:stmt
@@ -1636,7 +1637,7 @@ function! s:Exe(stmt) "{{{1
   endtry
 endfu
 
-function! s:SynID(group, ...) "{{{1
+function! s:SynID(group, ...)
   let property = exists("a:1") ? a:1 : 'fg'
   let c1 = synIDattr(synIDtrans(hlID(a:group)), property)
   " since when can c1 be negative? Is this a vim bug?
@@ -1648,7 +1649,7 @@ function! s:SynID(group, ...) "{{{1
   endif
 endfu
 
-function! s:GenerateColors(dict) "{{{1
+function! s:GenerateColors(dict)
   let result=copy(a:dict)
 
   if !has_key(result, 'bg') && has_key(result, 'ctermbg')
@@ -1685,7 +1686,7 @@ function! s:GenerateColors(dict) "{{{1
   return result
 endfunction
 
-function! s:SetMatcher(pattern, Dict) "{{{1
+function! s:SetMatcher(pattern, Dict)
   let param = s:GenerateColors(a:Dict)
   let clr = get(param, 'name', '')
   if empty(clr)
@@ -1696,7 +1697,7 @@ function! s:SetMatcher(pattern, Dict) "{{{1
   call s:SetMatch(clr, a:pattern, param)
 endfunction
 
-function! s:SetMatch(group, pattern, param_dict) "{{{1
+function! s:SetMatch(group, pattern, param_dict)
   call s:DoHlGroup(a:group, a:param_dict)
   if has_key(a:param_dict, 'pos')
     call matchaddpos(a:group, a:param_dict.pos, s:default_match_priority)
@@ -1716,7 +1717,7 @@ function! s:SetMatch(group, pattern, param_dict) "{{{1
     call add(w:match_list, a:pattern)
   endif
 endfunction
-function! s:Xterm2rgb16(color) "{{{1
+function! s:Xterm2rgb16(color)
   " 16 basic colors
   let r=0
   let g=0
@@ -1727,7 +1728,7 @@ function! s:Xterm2rgb16(color) "{{{1
   return [ r, g, b ]
 endfunction
 
-function! s:Xterm2rgb88(color) "{{{1
+function! s:Xterm2rgb88(color)
   " 16 basic colors
   let r=0
   let g=0
@@ -1755,7 +1756,7 @@ function! s:Xterm2rgb88(color) "{{{1
   return rgb
 endfunction
 
-function! s:Xterm2rgb256(color)  "{{{1
+function! s:Xterm2rgb256(color)
   " 16 basic colors
   let r=0
   let g=0
@@ -1780,7 +1781,7 @@ function! s:Xterm2rgb256(color)  "{{{1
   return rgb
 endfunction
 
-function! s:RoundColor(...) "{{{1
+function! s:RoundColor(...)
   let result = []
   let minlist = []
   let min    = 1000
@@ -1809,7 +1810,7 @@ function! s:RoundColor(...) "{{{1
   return result
 endfunction
 
-function! s:Check16ColorTerm(rgblist, minlist) "{{{1
+function! s:Check16ColorTerm(rgblist, minlist)
   " We only check those values for 256 color terminals here:
   " [205,0,0] [0,205,0] [205,205,0] [205,0,205]
   " [0,205,205] [0,0,238] [92,92,255]
@@ -1855,7 +1856,7 @@ function! s:Check16ColorTerm(rgblist, minlist) "{{{1
   return a:rgblist
 endfunction
 
-function! s:Ansi2Color(chars) "{{{1
+function! s:Ansi2Color(chars)
   " chars look like this
   " [0m[01;32m
   if !exists("s:term2ansi")
@@ -1962,7 +1963,7 @@ function! s:Ansi2Color(chars) "{{{1
   return [(empty(fground) ? 'NONE' : fground), (empty(bground) ? "NONE" : bground)]
 endfunction
 
-function! s:TermConceal(pattern) "{{{1
+function! s:TermConceal(pattern)
   " Conceals a list of patterns
   if exists("b:Schemer_did_syntax")
     return
@@ -1975,7 +1976,7 @@ function! s:TermConceal(pattern) "{{{1
   setl cocu=nv cole=2
   let b:Schemer_did_syntax=1
 endfu
-function! s:GetColorPattern(list) "{{{1
+function! s:GetColorPattern(list)
   "let list = map(copy(a:list), ' ''\%(-\@<!\<'' . v:val . ''\>-\@!\)'' ')
   "let list = map(copy(a:list), ' ''\%(-\@<!\<'' . v:val . ''\>-\@!\)'' ')
   let list = copy(a:list)
@@ -1983,18 +1984,18 @@ function! s:GetColorPattern(list) "{{{1
   return '\%#=1\%(\<\('.join(copy(a:list), '\|').'\)\>\)'
 endfunction
 
-function! s:GetMatchList() "{{{1
+function! s:GetMatchList()
   " this is window-local!
   return filter(getmatches(), 'v:val.group =~ ''^\(Color_\w\+\)\|NONE''')
 endfunction
 
-function! s:CheckTimeout(pattern, force) "{{{1
+function! s:CheckTimeout(pattern, force)
   " Abort, if pattern is not found within 100 ms and force
   " is not set
   return (!empty(a:force) || search(a:pattern, 'cnw', '', 100))
 endfunction
 
-function! s:SaveRestoreOptions(save, dict, list) "{{{1
+function! s:SaveRestoreOptions(save, dict, list)
   if a:save
     return s:SaveOptions(a:list)
   else
@@ -2009,7 +2010,7 @@ function! s:SaveRestoreOptions(save, dict, list) "{{{1
   endif
 endfun
 
-function! s:SaveOptions(list) "{{{1
+function! s:SaveOptions(list)
   let save = {}
   for item in a:list
     if item !~ '^@'
@@ -2034,11 +2035,11 @@ function! s:SaveOptions(list) "{{{1
   return save
 endfunction
 
-function! s:StripParentheses(val) "{{{1
+function! s:StripParentheses(val)
   return split(matchstr(a:val, '^\(hsl\|rgb\)a\?\s*(\zs[^)]*\ze)'), '\s*,\s*')
 endfunction
 
-function! s:ApplyAlphaValue(rgb) "{{{1
+function! s:ApplyAlphaValue(rgb)
   " Add Alpha Value to RGB values
   " takes a list of [ rr, gg, bb, aa] values
   " alpha can be 0-1
@@ -2076,7 +2077,7 @@ function! s:ApplyAlphaValue(rgb) "{{{1
   endif
 endfunction
 
-function! s:HSL2RGB(h, s, l, ...) "{{{1
+function! s:HSL2RGB(h, s, l, ...)
   let s = a:s + 0.0
   let l = a:l + 0.0
   if  l <= 0.5
@@ -2094,7 +2095,7 @@ function! s:HSL2RGB(h, s, l, ...) "{{{1
   return printf("%02X%02X%02X", r, g, b)
 endfunction
 
-function! s:Hue2RGB(m1, m2, h) "{{{1
+function! s:Hue2RGB(m1, m2, h)
   let h = (a:h + 0.0)/360
   if h < 0
     let h = h + 1
@@ -2113,7 +2114,7 @@ function! s:Hue2RGB(m1, m2, h) "{{{1
   return round(res * 255)
 endfunction
 
-function! s:Rgb2xterm(color) "{{{1
+function! s:Rgb2xterm(color)
   " selects the nearest xterm color for a rgb value like #FF0000
   " hard code values for 000000 and FFFFFF, they will be called many times
   " so make this fast
@@ -2177,7 +2178,7 @@ function! s:Rgb2xterm(color) "{{{1
   endif
 endfunction
 
-function! s:Warn(msg) "{{{1
+function! s:Warn(msg)
   let msg = 'Schemer: '. a:msg
   echohl WarningMsg
   echomsg msg
@@ -2185,14 +2186,14 @@ function! s:Warn(msg) "{{{1
   let v:errmsg = msg
 endfu
 
-function! s:LoadSyntax(file) "{{{1
+function! s:LoadSyntax(file)
   unlet! b:current_syntax
   exe "sil! ru! syntax/".a:file. ".vim"
 endfu
-function! s:HasGui() "{{{1
+function! s:HasGui()
   return has("gui_running") || (exists("+tgc") && &tgc)
 endfu
-function! s:HasColorPattern() "{{{1
+function! s:HasColorPattern()
   let _pos    = winsaveview()
   try
     if !exists("s:colornamepattern")
@@ -2212,7 +2213,7 @@ function! s:HasColorPattern() "{{{1
   endtry
 endfunction
 
-function! s:PrepareHSLArgs(list) "{{{1
+function! s:PrepareHSLArgs(list)
   let hsl=a:list
   let hsl[0] = (matchstr(hsl[0], '\d\+') + 360)%360
   let hsl[1] = (matchstr(hsl[1], '\d\+') + 0.0)/100
@@ -2222,7 +2223,7 @@ function! s:PrepareHSLArgs(list) "{{{1
   endif
   return s:HSL2RGB(hsl[0], hsl[1], hsl[2])
 endfu
-function! s:SyntaxMatcher(enable) "{{{1
+function! s:SyntaxMatcher(enable)
   if !a:enable
     return
   endif
@@ -2260,7 +2261,7 @@ function! s:SyntaxMatcher(enable) "{{{1
   endfor
 endfu
 
-function! s:ColorOff() "{{{1
+function! s:ColorOff()
   for _match in s:GetMatchList()
     sil! call matchdelete(_match.id)
   endfor
@@ -2274,7 +2275,7 @@ function! s:ColorOff() "{{{1
   unlet! b:Schemer_did_syntax w:match_list s:conceal
 endfu
 
-function! s:DoColor(force, line1, line2, ...) "{{{1
+function! s:DoColor(force, line1, line2, ...)
   " initialize plugin
   try
     if v:version < 800 && !has('nvim')
@@ -2428,7 +2429,7 @@ function! s:DoColor(force, line1, line2, ...) "{{{1
   call winrestview(_a)
 endfu
 
-function! s:rgb2term(arg,bang) "{{{1
+function! s:rgb2term(arg,bang)
   if a:arg =~ '^rgb'
     let clr    = s:StripParentheses(a:arg)
     let color  = printf("#%02X%02X%02X", clr[0], clr[1], clr[2])
@@ -2447,7 +2448,7 @@ function! s:rgb2term(arg,bang) "{{{1
   return tcolor
 endfu
 
-function! s:AutoCmds(enable) "{{{1
+function! s:AutoCmds(enable)
   if a:enable && !get(g:, 'schemer_debug', 0)
     aug Schemer
       au!
@@ -2478,7 +2479,7 @@ function! s:AutoCmds(enable) "{{{1
   endif
 endfu
 
-function! s:LocalFTAutoCmds(enable) "{{{1
+function! s:LocalFTAutoCmds(enable)
   if a:enable
     aug FTSchemer
       au!
@@ -2527,7 +2528,7 @@ function! s:LocalFTAutoCmds(enable) "{{{1
   endif
 endfu
 
-function! s:ColorWinEnter(...) "{{{1
+function! s:ColorWinEnter(...)
   let force = a:0 ? a:1 : 0
   " be fast!
   if !force
@@ -2554,7 +2555,7 @@ function! s:ColorWinEnter(...) "{{{1
   call setpos('.', _c)
 endfu
 
-function! s:ColorLine(force, start, end) "{{{1
+function! s:ColorLine(force, start, end)
   if get(b:, 'Schemer_changedtick', 0) == b:changedtick && empty(a:force)
     " nothing to do
     return
@@ -2639,28 +2640,66 @@ function! Schemer#ProcessFile(file) abort
   endwhile
 
   let outlines = []
-  let outlines = outlines->add("set background=".background)
-  let outlines = outlines->add("if version > 580")
-  let outlines = outlines->add("  highlight clear")
-  let outlines = outlines->add("  if exists(\"syntax_on\")")
-  let outlines = outlines->add("    syntax reset")
-  let outlines = outlines->add("  endif")
-  let outlines = outlines->add("endif")
-  let outlines = outlines->add("let g:colors_name = \"".(a:file->substitute(".*/", "", "")->substitute("\.schemer", "", ""))."\"")
 
+  " Insert the preamble
+  call add(outlines, "set background=".background)
+  call add(outlines, "if version > 580")
+  call add(outlines, "  highlight clear")
+  call add(outlines, "  if exists(\"syntax_on\")")
+  call add(outlines, "    syntax reset")
+  call add(outlines, "  endif")
+  call add(outlines, "endif")
+  call add(outlines, "let g:colors_name = \"".(a:file->substitute(".*/", "", "")->substitute("\.schemer", "", ""))."\"")
+
+  call add(outlines, "\" Highlight group definitions")
   for item in primary
     let itemline = "hi ".item[0]." guifg=".item[1]." guibg=".item[2]
     let itemline .= " ctermfg=".(item[1] ==# "NONE" ? "NONE" : s:rgb2term(item[1][1:-1], 1))
     let itemline .= " ctermbg=".(item[2] ==# "NONE" ? "NONE" : s:rgb2term(item[2][1:-1], 1))
     let itemline .= " cterm=".item[3]." gui=".item[3]
-    let outlines = outlines->add(itemline)
+    call add(outlines, itemline)
   endfor
 
+  call add(outlines, "\" Link definitions")
   for from_grp in keys(links)
     let to_grp = links[from_grp]
-    let outlines = outlines->add("hi! link ".from_grp." ".to_grp)
+    call add(outlines, "hi! link ".from_grp." ".to_grp)
   endfor
 
+
+  call add(outlines, "\" Code to clear any groups that are not defined")
+
+  " Inspired by https://github.com/george-b/zenchrome
+  let defined_groups = links->keys()->extend(primary->deepcopy()->map("v:val[0]"))
+  call add(outlines, "let s:DefinedColors=".string(defined_groups->deepcopy()->map('tolower(v:val)')))
+  call add(outlines, "function! s:ClearUndefinedColors(colors)")
+  call add(outlines, "  let undefined_groups = filter(a:colors->keys()->map('tolower(v:val)'), 'index(s:DefinedColors, tolower(v:val)) < 0')")
+  call add(outlines, "  call map(undefined_groups, \"execute('highlight' . ' ' . v:val . ' ' . 'NONE')\")")
+  call add(outlines, "endfunction")
+  call add(outlines, "function! s:GetHighlights()")
+  call add(outlines, "  let highlights  = execute('highlight')")
+  call add(outlines, "  let highlights  = substitute(highlights, '\\n\\s\\+', ' ', 'g')")
+  call add(outlines, "  let highlights  = split(highlights, '\\n')")
+  call add(outlines, "  call map(highlights, \"split(v:val, '\\\\s\\\\+xxx\\\\s\\\\+')\")")
+  call add(outlines, "  call map(highlights, \"[copy(v:val)[0], split(copy(v:val)[1])]\")")
+  call add(outlines, "  return highlights")
+  call add(outlines, "endfunction")
+  call add(outlines, "function! s:GetColors()")
+  call add(outlines, "  let colors = {}")
+  call add(outlines, "  for [group, values] in <SID>GetHighlights()")
+  call add(outlines, "    let attributes = {}")
+  call add(outlines, "    if values[0] ==# 'links'")
+  call add(outlines, "      let attributes['links'] = values[-1]")
+  call add(outlines, "    elseif values[0] !=# 'cleared'")
+  call add(outlines, "      call map(values, \"split(v:val, '=')\")")
+  call add(outlines, "      call map(values, \"len(v:val) == 2 ? {v:val[0]: v:val[1]} : {v:val[0] : v:val[0]}\")")
+  call add(outlines, "      call map(values, \"extend(attributes, v:val)\")")
+  call add(outlines, "    endif")
+  call add(outlines, "    let colors[group] = attributes")
+  call add(outlines, "  endfor")
+  call add(outlines, "  return colors")
+  call add(outlines, "endfunction")
+  call add(outlines, "call <SID>ClearUndefinedColors(<SID>GetColors())")
   let targetfile = getenv('HOME').'/.vim/colors/'.(a:file->substitute(".*/", "", "")->substitute('\.schemer', '.vim', ''))
   call writefile(outlines, targetfile, "w")
 

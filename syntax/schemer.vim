@@ -19,7 +19,7 @@ syntax match schemerColor "#[0-9a-fA-F]\+"
 syntax match schemerDelims "[,.]" containedin=schemerLinkSource
 syntax match schemerLinkLine "^link .*$" contains=schemerLink,schemerLinkSource,schemerLinkDest
 syntax keyword schemerLink contained link
-syntax match schemerLinkSource "\(link \)\@<=[a-zA-Z,]\+" contained
+syntax match schemerLinkSource "\(link \)\@<= *[a-zA-Z,]\+" contained
 syntax match schemerLinkDest "[a-zA-Z]\+$" contained
 syntax region schemerComment start=/^ *"/ end="$"
 syntax region schemerPalette start="^palette:" end="\." contains=schemerPaletteKeyword,schemerPaletteColorName,schemerPaletteColorVal,schemerComment
