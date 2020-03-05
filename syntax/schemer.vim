@@ -12,7 +12,7 @@ syntax clear
 " Define highlighting groups
 syntax keyword schemerKeyword background light dark
 syntax keyword schemerNone NONE
-syntax keyword schemerAttrs italic bold
+syntax keyword schemerAttrs italic bold inverse underline undercurl strikethrough reverse standout
 syntax match schemerGroup "^[A-Z][^ ]*"
 syntax match schemerName "[ ,]\zs[^# ][^ ]*"
 syntax match schemerColor "#[0-9a-fA-F]\+"
