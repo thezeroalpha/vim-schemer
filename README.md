@@ -3,10 +3,10 @@
 This plugin defines a much simpler language for writing colorschemes, and generates a Vim colorscheme file automatically, including all necessary boilerplate.
 
 It consists of:
-* a new filetype, with the extension '.schemer'
-* an autocommand for the filetype, to generate and set the colorscheme automatically whenever a Schemer file is saved. Can be disabled by setting `g:schemer_no_autocmd`.
-* a command, `SchemerGenerate`, to convert a '.schemer' file into a '.vim' colorscheme file
-* two mappings:
+* a new filetype, 'schemer', with the extension '.schemer'
+* a command, `SchemerGenerate`, to generate a '.vim' colorscheme file from a '.schemer' file (only accessible in files with the 'schemer' filetype)
+* an autocommand for the Schemer filetype, to run `:SchemerGenerate` and switch to the colorscheme automatically, whenever a Schemer file is saved. Can be disabled by setting `g:schemer_no_autocmd`.
+* two `<Plug>` mappings, with no default mapping:
     * `<Plug>SchemerSynstack` to echo the highlight groups of the word under the cursor
     * `<Plug>SchemerEdit` to open the '.schemer' file for the current colorscheme. Assumes the '.schemer' file is in ~/.vim/colors.
 
@@ -14,7 +14,7 @@ It consists of:
 I like making my own colorschemes, I don't like dealing with Vim's syntax.
 I wanted something simpler and more intuitive.
 
-Here are some specific examples from my colorscheme.
+Here are some specific examples from my colorscheme, comparing Schemer syntax and Vim syntax.
 
 ### Example: incsearch
 Vim colorscheme syntax
@@ -25,7 +25,7 @@ hi Incsearch guifg=NONE guibg=#b7d1b0 ctermfg=NONE ctermbg=151 cterm=bold gui=bo
 
 Schemer syntax:
 
-```
+```schemer
 Incsearch NONE, #b7d1b0. bold
 ```
 
@@ -40,7 +40,7 @@ hi! link typedef structure
 
 Schemer syntax:
 
-```
+```schemer
 link label,storageclass,typedef structure
 ```
 
@@ -48,7 +48,7 @@ link label,storageclass,typedef structure
 Overall, Vim's syntax for colorscheme definitions feels repetitive to me, and I can't always remember the necessary boilerplate, so I made this.
 A Schemer colorscheme definition is as simple as:
 
-```
+```schemer
 background dark
 palette:
     text #333333,
