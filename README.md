@@ -82,7 +82,7 @@ Also, it still feels too detailed, and there's too much writing.
 That sounds like a childish complaint, but I wanted to make writing colorschemes as simple as possible for me.
 Having to specify the details of every color without actually needing that level of control was too much.
 
-Another option is [colortemplate](https://github.com/lifepillar/vim-color template), which is pretty close to what I want.
+Another option is [colortemplate](https://github.com/lifepillar/vim-colortemplate), which is pretty close to what I want.
 However, I found that it's a bit too much for my purposes, and I prefer my syntax.
 It's just too much boilerplate for me; I understand that has to be there to ensure functionality on everyone's computer, hence I'm not making any guarantees about Schemer working for everyone.
 
