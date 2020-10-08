@@ -10,7 +10,7 @@ set cpo&vim
 syntax clear
 
 " Define highlighting groups
-syntax keyword schemerKeyword background light dark
+syntax keyword schemerKeyword background light dark ansi
 syntax keyword schemerNone NONE
 syntax keyword schemerAttrs italic bold inverse underline undercurl strikethrough reverse standout
 syntax match schemerGroup "^[A-Z][^ ]*"

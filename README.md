@@ -74,6 +74,12 @@ link statusline,statuslinenc normal
 
 In my opinion, much more readable and writable than Vimscript.
 
+You can also set `g:terminal_ansi_colors` with the `ansi:` keyword:
+
+```schemer
+ansi: #eff0f3, #125394, #145a9c, #1562c0, #2182e1, #2377e1, #3c68e6, #0a0c0f, #525963, #125394, #145a9c, #1562c0, #2182e1, #2377e1, #3c68e6, #0a0c0f
+```
+
 ## Other alternatives
 There are a few alternative colorscheme generators.
 I took a look at [RNB](https://github.com/romainl/vim-rnb), but it didn't feel right for me, for a few reasons.

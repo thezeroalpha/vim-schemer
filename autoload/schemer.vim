@@ -2574,6 +2574,7 @@ function! Schemer#ProcessFile(file) abort
   let nlines = len(lines)
 
   let colornames = {}
+  let ansis = []
 
   let cursor = 0
 
@@ -2598,6 +2599,8 @@ function! Schemer#ProcessFile(file) abort
           break
         endif
       endwhile
+    elseif line =~ "^ansi:"
+      let ansis = split(line)[1:]->map({key, val -> (val->substitute(",", "", "")->trim())})
     elseif line =~ "^link"
       let splitline = line->split()
       let from = splitline[1]->trim()
@@ -2650,6 +2653,9 @@ function! Schemer#ProcessFile(file) abort
   call add(outlines, "  endif")
   call add(outlines, "endif")
   call add(outlines, "let g:colors_name = \"".(a:file->substitute(".*/", "", "")->substitute("\.schemer", "", ""))."\"")
+
+  call add(outlines, "\"ANSI colors for :terminal")
+  call add(outlines, "let g:terminal_ansi_colors = [".ansis->map("'\"'.v:val.'\"'")->join(', ')."]")
 
   call add(outlines, "\" Highlight group definitions")
   for item in primary
